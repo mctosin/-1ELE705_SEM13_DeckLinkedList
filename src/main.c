@@ -2,244 +2,143 @@
 #include "main.h"
 #define _USE_MATH_DEFINES
 #include "math.h"
+#include "string.h"
+#include "stdio.h"
+#include "stdlib.h"
+#include <time.h>
+#include "Aux_Func.h"
 
-unsigned somacartesiana(Cart* x, Cart y) {
+// Legacy global variables
+// if used elsewere it MUST be defined as extern
+const char polar[] = { "polar" };
+const char cartesian[] = { "cartesian" };
 
-   
-}
+// Global variables
+// if used elsewere it MUST be defined as extern
 
-unsigned cartesian2polar(Pol* w, Cart x) {
+const char* face[] = {	"Ace", "Deuce", "Three", "Four", "Five", 
+						"Six", "Seven", "Eight", "Nine", "Ten",
+						"Jack", "Queen", "King"	};
 
-   
-}
+const char* suit[] = { "Hearts", "Diamonds", "Clubs", "Spades" };
 
-unsigned multiplypolar(Pol* w, Pol p) {
+// Mude a string com o caminho (PATH) do diretório do seu projeto.
+// Use duas contrabarras para separar os diretórios.
+const char Path[] = { "C:\\Repos\\1ELE705_SEM13_DeckLinkedList\\" };
 
-    
-}
+//void view(ListCardNodePtr lPtr, FILE* cfPtr) {
+//
+//}
 
-unsigned normalizeangle(Pol* w) {
-    
-
-    // Não modifique o código abaixo
-    // Este código deve permanecer no final da função
-    // Marretada numérica
-    if ((M_PI - fabsl(w->g)) < 1e-14) {
-        w->g = M_PI;
-    }
-    return 0;
-}
-
-unsigned polar2cartesian(Cart* x, Pol w) {
-
-
-}
-
-unsigned complexsum(CplxNum* c1, CplxNum c2) {
+void createOneFr52Deck(ListCardNodePtr* sPtr) {
+	// Proibido alterar o código acima
 
 
-}
-
-unsigned complexmultiply(CplxNum* c1, CplxNum c2) {
+	// Crie seu código aqui
 
 
+	// Proibido alterar o código abaixo
 }
 
 
-// Descrição do Assignment
+void shuffle(ListCardNodePtr* sPtr) {
+	// Proibido alterar o código acima
 
-// Neste assigment você deve continuar o desenvolvimento das
-// funções que compõe uma pequena biblioteca que implementa
-// as operações aritméticas básicas para números complexos
-// na base cartesiana ou na base polar.
+
+	// Crie seu código aqui
+
+
+	// Proibido alterar o código abaixo
+}
+
+#if 0
+// Código inicial para a função shuffle
+void shuffle(ListCardNodePtr* sPtr) {
+	ListCardNodePtr trocaPtr, jumpPtr, trocaAnteriorPtr, jumpAnteriorPtr, trocaProxPtr;
+	int N;
+
+	// trocaPtr e jumpPtr recebem o primeiro nó, se existir.
+	if (*sPtr == NULL) return;
+	trocaAnteriorPtr = NULL;
+	trocaPtr = *sPtr;
+	jumpAnteriorPtr = NULL;
+	jumpPtr = *sPtr;
+
+	while (trocaPtr != NULL) {
+		do {
+			// Sorteia N entre 1 e 100
+			N = randomico(); //rand() % 100 + 1; // Descomente e veja que nunca vai funcionar.
+			// jumpPtr percorre N nós-carta na lista de forma circular
+			for (; N > 0; N--) {
+				jumpAnteriorPtr = jumpPtr;
+				jumpPtr = jumpPtr->nextPtr;
+				if (jumpPtr == NULL) {
+					jumpPtr = *sPtr;
+				}
+			}
+		} while (jumpPtr->nextPtr == trocaPtr || trocaPtr->nextPtr == jumpPtr);
+		// Proibido alterar o código acima
+
+		// Continue o código
+
+
+
+		// Proibido alterar o código abaixo
+	}
+}
+// Fim do código inicial para a função shuffle
+#endif
+
+
+
+// Este projeto implementa funções para o gerenciamento de cartas de.
+// baralho, que podem ser utilizadas para a construção de um jogo.
 // 
-// Nesta nova parte do projeto, utilizaremos as funções que
-// você implementou no assignment da Semana 9.
-// Assim, você deve copiar o código construído para as funções 
-// do projeto da Semana 9 e colar neste novo projeto
+// As funções a serem construídas são: createOneFr52Deck e shuffle.
 //
-// As especificações das funções implementadas no Assignment
-// semana 9 continuam, em grande parte, as mesmas e seguem logo
-// abaixo desta nova descrição.
-// No entanto, as funções normalizeangle e multiplypolar 
-// tiveram seus requisitos alterados de forma a melhorar seu 
-// desempenho e para atender os requisitos das novas funções
-// que serão implementadas.
-// Sendo assim, testes adicionais para estas funções foram 
-// implementados.
+// A função createOneFr52Deck cria um monte contendo as cartas de um baralho
+// padrão francês com 52 cartas. O monte de cartas é uma lista dinâmica cujos
+// nós são do tipo ListCardNode e o ponteiro para seu nó inicial é do tipo
+// ListCardNodePtr.
+// Esta função recebe o endereço do ponteiro de uma lista ligada de cartas 
+// (ponteiro para o ponteiro do monte) e realiza a inserção das 52 cartas 
+// padrão do baralho francês em ordem crescente. A ordem crescente é 
+// organizada pelo valor crescente dos nipes e, de forma secundária, pelo valor
+// crescente das faces. Assim, os nipes vão de Hearts a Spades e ter valor de 1
+// a 4, respectivamente. Estes seguem a sequencia descrita pelo vetor de strings
+// constantes suit. O valor da face vai de 1 a 13, onde Ace é 1 e King é 13,
+// respectivamente, seguindo a sequencia definida pelo vetor de strings constantes
+// face.
+// A função createOneFr52Deck recebe como parâmetro o endereço do ponteiro
+// para um monte de cartas (ListCardNodePtr*) e cria os 52 nós do monte,
+// seguindo a sequencia descrita e usando os vetores de strings face e suit, 
+// que são strings globais com valores constantes.
 //
-// A função normalizeangle recebe como parâmetro de entrada 
-// um tipo Pol* cujo argumento do ângulo pode ter qualquer 
-// amplitude em radianos, incluindo valores positivos e 
-// negativos.
-// A função agora normaliza o valor deste argumento de forma 
-// que este esteja entre -PI < ângulo <= PI. Note que o 
-// intervalo foi ligeiramente modificado.
-// Outra modificação fornecida, que deve ser incorporada ao 
-// final do seu código na função, trata da descontinuidade 
-// e da imprecisão ou erros inerentes aos valores em 
-// long double em torno do PI radianos.
-// Imagine um ângulo calculado cujo valor deveria ser exatos 
-// PI radianos. Este ângulo raramente terá este valor, devido 
-// às aproximações do processamento em ponto flutuante. Na 
-// realidade, este ângulo irá oscilar com um erro E entre 
-// -PI+E e PI-E. Onde E é o erro de aproximação inserido pelas
-// operações em ponto flutuante.
-// Isso produz resultados inesperados e em grande parte
-// errados quando o ângulo do número normalizado estiver
-// nesta região.
-// Assim, sempre que o valor calculado estiver dentro desta
-// região de erro, o código irá aproximar automaticamente
-// o resultado para PI, conforme pode ser visto no trecho 
-// de código disponibilizado.
 //
-// A função cartesian2polar agora deve retornar valores de
-// ângulo no intervalo entre -PI < ângulo <= PI.
+// A função shuffle embaralha uma dada lista dinâmica de cartas. A função 
+// recebe o endereço do ponteiro para o nó inicial de uma lista de cartas.
+// A forma como a função deve embaralhar as cartas da seguinte forma:
+// Um ponteiro denominado trocaPtr deve ser criado. No início da execução
+// da função o ponteiro trocaPtr aponta para o primeiro elemento da lista
+// de cartas. Além deste, um ponteiro denominado jumpPtr também deve ser
+// criado e, inicialmente, também deve apontar para o primeiro nó da lista.
+// Pelo fato da lista ser dinâmica, não há como saber a quantidade de nós
+// presentes na lista, a não ser que se percorra a lista até o fim contando
+// seus nós. No entanto, percorrer a lista sem realizar alguma tarefa é 
+// perda de tempo de processamento útil.
+// Assim, inicialmente um número denominado N entre 1 e 100 deve ser 
+// sorteado. O jumpPtr deve se deslocar sequencialmente na lista por N nós.
+// Caso atinja o final da lista antes de completar os N deslocamentos, 
+// o ponteiro jumpPtr deve voltar a apontar para o inicio da lista e 
+// continuar se deslocando, até completar os N deslocamentos.
+// O nó pontado por jumpPtr deve ser trocado com o nó apontado por trocaPtr
+// e o ponteiro trocaPtr deve passar a apontar o próximo elemento da lista.
+// O processo se repete com um novo sorteio de N e com o ponteiro jumpPtr
+// sendo deslocado circularmente pela lista à partir da última posição
+// que havia parado. Assim, jumpPtr fica circulando pela lista após cada
+// sorteio de N.
+// O elemento apontado por jumpPtr é trocado com o elemento apontado por 
+// trocaPtr e trocaPtr é apontado para o próximo nó da lista.
+// O processo termina quando trocaPtr chegar ao fim da lista, apontando 
+// para NULL.
 //
-// A nova versão da função multiplypolar deve retornar o 
-// valor do ângulo calculado normalizado entre 
-// -PI < ângulo <= PI. Para isso, você deve obrigatoriamente
-// usar a função normalizeangle, chamando-a dentro da
-// função multiplypolar.
-//
-// A função polar2cartesian recebe um valor Pol w em 
-// coordenadas polares e o converte para cartesiano, 
-// retornando-o na variável do tipo Cart apontada por x.
-// Esta função deve verificar se o valor do módulo do
-// número complexo de entrada é zero, então deve retornar
-// um vetor com coordenadas cartesianas zero.
-// Adicionalmente a função testa se os valores do módulo ou 
-// do ângulo do número entrado são INFINITY. Caso sejam, a
-// função deve retornar um par de coordenadas INFINITY.
-//
-// Para implementar as funções complexsum e complexmultiply 
-// é preciso entender como é aplicado o tipo ComplexNum, o  
-// qual é definido em main.h
-// ComplexNum é definido por uma struct que contém dois 
-// campos, um do tipo Clpx e outro do tipo char*. O primeiro 
-// contém um valor complexo s, que pode conter em um certo
-// momento um valor na base cartesiana ou um valor na base
-// polar. O segundo (mode) é um ponteiro para a string cujo 
-// conteúdo define qual a base do número complexo armazenado 
-// em s.
-// Nas linhas 5 e 6 de main.h estão definidas as strings 
-// polar e cartesian. Estas são as strings para qual o 
-// campo mode de uma variável do tipo ClpxNum deve apontar,
-// dependendo, como já dito, da base do número complexo
-// armazenado no campo s desta mesma variável.
-// O campo s é do tipo Clpx, que é uma Union das structs 
-// Cart e Pol. Isto permite que o campo s possa conter valores
-// do tipo Cart ou do tipo Pol, ou seja, s pode representar
-// tanto um número complexo na base cartesiana quanto um
-// número complexo na base polar.
-// Por exemplo, se uma variável do tipo ClpxNum contiver
-// um número complexo cartesiano, então, seu campo mode irá 
-// apontar para a string cartesian. Desta forma, o campo s
-// conterá valores das coordenadas cartesianas do número.
-// Da mesma forma, se o campo s contiver um número complexo 
-// polar, o campo mode irá apontar para a string polar. 
-// Consequentemente o campo s terá conterá sub-campos com as
-// coordenadas polares do número.
-// 
-// A função complexsum soma dois números complexos c1 e c2, 
-// encapsulados com o tipo ClpxNum.
-// Nossa biblioteca conseque apenas somar números na base
-// cartesiana. A biblioteca também possui funções para 
-// converter números da base cartesiana para a base polar e
-// vice-versa.
-// A função complexsum pode somar dois números complexos, os 
-// quais podem estar em qualquer base. A função realiza a 
-// seguinte operação: c1 = c1 + c2.
-// Se necessário, a função converte uma cópia dos números
-// a serem somados para a base cartesiana, soma os mesmos,
-// converte o resultado para a base original de c1 e 
-// retorna o resultado para c1.
-// A função retorna zero se não houver erros. Eventualmente
-// caso alguma função de conversão retorne um código de erro
-// (deferente de zero), então a função complexsum pára sua
-// execução e retorna o erro.
-//
-// A função complexmultiply opera de análoga à função 
-// complexsum. Nossa biblioteca somente consegue multiplicar
-// números na base polar.
-//
-// Para a implementação das funções deste assignment é
-// mandatório que as funções básicas construídas sejam
-// utilizadas dentro das funções de mais alto nível
-// quando necessário. O uso de código redundante irá 
-// tornar seu exercício errado, mesmo que esteja funcional.
-//
-
-
-// Descrição do Assignment anterior (SEM9)
-
-/*
-Sua tarefa é ímplementar as funções acima prototipadas
-Estas funções usam as structs, unions e typedefs definidos em
-main.h. Estas definições permitem a manipulação de números
-complexos no sistema de coordenadas cartesiano (a+bj) ou no
-sistema polar (r*exp(jg)) (r=módulo, g=ângulo).
-
-O objetivo é criar funções básicas para serem utilizadas na
-construção de funções mais elaboradas, que permitirão lidar
-com os problemas inerentes aos números complexos de maneira
-transparente ao usuário.
-
-Estas funções básicas, apesar de implementarem operações
-matemáticas elementares, lidam com alguns problemas numéricos
-importantes. Assim, os testes criados em test.cpp verificam
-a implementação de cada uma destas quatro funções iniciais.
-Os testes estão agrupados em tópicos referentes a cada uma
-das funções a serem testadas, como pode ser visto no Test
-Explorer.
-
-A função somacartesiana recebe dois parâmetros do tipo Cart
-e realiza a seguinte operação vetorial sobre estes:
-x = x + y,
-onde dois números complexos (x, y) que estão na forma
-cartesiana, são somados.
-Nesta versão, esta função sempre deve retornar zero.
-
-A função cartesian2polar converte um número na forma
-cartesiana (x) em número na forma polar (w), onde x e w
-são os parâmetros de entrada e de saída da função,
-respectivamente.
-Esta função converte vetores cartesianos nos quatro
-quadrantes. A função utiliza como unidade angular o radiano.
-Na saída, o ângulo (g) estará entre -PI <= g < PI (rad).
-A implementação de algumas das funções trigonométricas
-tradicionais em math.h possuem problemas em diferentes
-quadrantes e nos seus limites. Sua tarefa é pesquisar e
-encontrar a solução.
-Nesta versão, esta função sempre deve retornar zero.
-
-A função multiplypolar realiza a seguinte operação sobre
-números na forma polar:
-w = w * p
-Como a função poderá ser utilizada para a divisão de dois
-números, esta testa para alguns problemas númericos comums.
-Caso o módulo de qualquer um dos operadores for zero, então
-o resultado retornado será o vetor polar (0,0), pois não há
-definição de ângulo para vetor com comprimento zero.
-Nas bibliotecas utilizadas existe a constante INFINITY, que
-define um número o qual valores acima deste são considerados
-números infinitos. Assim, caso algum dos módulos dos parâmetros
-fornecidos para a função forem iguais ou maiores que INFINITY,
-então a saída terá módulo INFINITY. O ângulo não é afetado.
-Nas bibliotecas também é definido a constante _HUGE_ENUF. Caso
-ambos os parâmetros de entrada forem maiores que _HUGE_ENUF,
-então a função deve retornar INFINITY. O ângulo não é afetado.
-Verifique como é definida a constante INFINITY e entenda o
-porquê desta regra.
-A função retorna zero normalmente e retorna 2 caso o módulo do
-resultado retornado seja INFINITY.
-
-A função normalizeangle normaliza o ângulo de um número
-complexo (w) na forma polar. O número entrado pode ter um ângulo
-qualquer expresso em radianos, inclusive com valor negativo.
-A função deve converter o ângulo entrado para o intervalo
-positivo entre -PI <= g < PI (rad).
-A norma do vetor não é processada, permanecendo inalterada.
-Esta função sempre deve retornar zero.
-
-*/

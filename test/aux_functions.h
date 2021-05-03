@@ -7,8 +7,12 @@
 
 extern "C"
 {
-#include "../src/main.h"
+    #include "../src/main.h"
+    #include "../src/Aux_Func.h"
+    extern const char polar[];
+    extern const char cartesian[];
 }
+
 
 template<size_t size>
 ::testing::AssertionResult ArraysMatch(const uint8_t(&expected)[size],
@@ -42,6 +46,26 @@ template<size_t size>
                 << print_uint64_hex(expected[i]) <<
                 ") != actual[" << i << "] ("
                 << print_uint64_hex(actual[i]) << ")";
+        }
+    }
+
+    return ::testing::AssertionSuccess();
+}
+
+template<size_t size>
+::testing::AssertionResult ArraysMatch(const int(&expected)[size],
+    const int(&actual)[size])
+{
+    for (size_t i(0); i < size; ++i)
+    {
+        if (expected[i] != actual[i])
+        {
+            return ::testing::AssertionFailure() //<<
+                //"expected[" << i << "] ("
+               // << print_uint64_hex(expected[i]) <<
+               // ") != actual[" << i << "] ("
+               // << print_uint64_hex(actual[i]) << ")"
+                ;
         }
     }
 
@@ -126,7 +150,7 @@ template<size_t size>
 
 ::testing::AssertionResult ComplexNumberNear(CplxNum expected, CplxNum actual, double tolerance)
 {
-    if (strcmp(expected.mode, cartesian) == 0 && strcmp(actual.mode, cartesian) == 0) {
+    if (strcmp(expected.mode, cartesian)==0 && strcmp(actual.mode, cartesian)==0) {
         if (fabs(expected.s.cart.a - actual.s.cart.a) > tolerance || fabs(expected.s.cart.b - actual.s.cart.b) > tolerance)
         {
             return ::testing::AssertionFailure() <<
@@ -150,6 +174,56 @@ template<size_t size>
             << " != " << "actual.mode == " << actual.mode << " )";
     }
 
+    return ::testing::AssertionSuccess();
+}
+
+::testing::AssertionResult ListMatch(ListCardNodePtr actualListPtr, ListCardNodePtr expectedListPtr)
+{
+    ListCardNodePtr actualPtr = actualListPtr;
+    ListCardNodePtr expectedPtr = expectedListPtr;
+
+    while (actualPtr != NULL) {
+        if (strcmp(actualPtr->card.face, expectedPtr->card.face) ||
+            (actualPtr->card.face_number != expectedPtr->card.face_number) ||
+            strcmp(actualPtr->card.suit, expectedPtr->card.suit) ||
+            (actualPtr->card.suit_number != expectedPtr->card.suit_number)) {
+            return ::testing::AssertionFailure() << "List Match Fail";
+        }
+        actualPtr = actualPtr->nextPtr;
+        expectedPtr = expectedPtr->nextPtr;
+    }
+    if (expectedPtr != NULL) {
+        // No match!
+        return ::testing::AssertionFailure() << "List Match Fail";
+    }
+    return ::testing::AssertionSuccess();
+}
+
+::testing::AssertionResult ListNodeAddressesMismatch(ListCardNodePtr actualListPtr, ListCardNodePtr expectedListPtr)
+{
+    ListCardNodePtr actualPtr = actualListPtr;
+    ListCardNodePtr expectedPtr = expectedListPtr;
+
+    while (actualPtr != NULL) {
+        if (actualPtr == expectedPtr) {
+            return ::testing::AssertionFailure() << "List Node Address Mismatch Fail";
+        }
+        actualPtr = actualPtr->nextPtr;
+        expectedPtr = expectedPtr->nextPtr;
+    }
+    if (expectedPtr != NULL) {
+        // No match!
+        return ::testing::AssertionFailure() << "Last Link NULL Match Fail";
+    }
+    return ::testing::AssertionSuccess();
+}
+
+::testing::AssertionResult NullPointerTest(ListCardNodePtr actualListPtr, ListCardNodePtr expectedListPtr)
+{
+    if (expectedListPtr == NULL || actualListPtr == NULL) {
+        // Some pointer is NULL
+        return ::testing::AssertionFailure() << "FAIL, Some pointer is NULL";
+    }
     return ::testing::AssertionSuccess();
 }
 
